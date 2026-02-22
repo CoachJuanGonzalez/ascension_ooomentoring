@@ -24,13 +24,15 @@
             theme: {
                 extend: {
                     colors: {
-                        'gold': '#D4AF37',
-                        'gold-light': '#E5C158',
-                        'gold-dark': '#B8941F',
+                        'gold': '#C9A961',
+                        'gold-light': '#D4B76E',
+                        'gold-dark': '#A88D4E',
+                        'bronze': '#8B7355',
                     },
                     fontFamily: {
-                        'sans': ['Inter', 'system-ui', 'sans-serif'],
-                        'serif': ['Playfair Display', 'Georgia', 'serif'],
+                        'sans': ['Cormorant Garamond', 'Georgia', 'serif'],
+                        'serif': ['Cinzel', 'Georgia', 'serif'],
+                        'display': ['Cinzel', 'serif'],
                     }
                 }
             }
@@ -40,26 +42,37 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
 
     <style>
         html {
             scroll-behavior: smooth;
         }
         body {
-            font-family: 'Inter', system-ui, sans-serif;
-            background-color: #0a0a0a;
-            color: #e5e5e5;
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            background-color: #000000;
+            color: #d4c5b0;
         }
 
         .font-serif {
-            font-family: 'Playfair Display', Georgia, serif;
+            font-family: 'Cinzel', Georgia, serif;
         }
 
-        /* Grain overlay effect */
+        .font-display {
+            font-family: 'Cinzel', serif;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+        }
+
+        /* Dark textured background */
         .grain-overlay {
             position: relative;
+            background-color: #0a0a0a;
+            background-image:
+                linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+                url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='2.5' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.15'/%3E%3C/svg%3E");
         }
+
         .grain-overlay::before {
             content: '';
             position: absolute;
@@ -67,9 +80,50 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+            background:
+                radial-gradient(ellipse at center, transparent 0%, rgba(0,0,0,0.4) 100%);
             pointer-events: none;
+            opacity: 0.8;
+        }
+
+        /* Gold border accent lines */
+        .gold-border-top {
+            border-top: 1px solid #C9A961;
+            position: relative;
+        }
+
+        .gold-border-bottom {
+            border-bottom: 1px solid #C9A961;
+            position: relative;
+        }
+
+        .gold-border-double {
+            border-top: 3px double #C9A961;
+            border-bottom: 3px double #C9A961;
+        }
+
+        /* Framed section */
+        .framed-section {
+            border: 2px solid #8B7355;
+            background:
+                linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.85)),
+                url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='2.5' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.1'/%3E%3C/svg%3E");
+            box-shadow:
+                inset 0 0 60px rgba(0, 0, 0, 0.5),
+                0 8px 32px rgba(0, 0, 0, 0.8);
+            position: relative;
+        }
+
+        .framed-section::before {
+            content: '';
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            right: 8px;
+            bottom: 8px;
+            border: 1px solid #C9A961;
             opacity: 0.3;
+            pointer-events: none;
         }
 
         /* Animations */
@@ -95,33 +149,34 @@
 
         /* Hover effects */
         .hover-elevate {
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
         }
 
         .hover-elevate:hover {
             transform: translateY(-4px);
-            box-shadow: 0 20px 40px rgba(212, 175, 55, 0.15);
+            border-color: #C9A961;
+            box-shadow: 0 12px 48px rgba(201, 169, 97, 0.2);
         }
 
-        /* Custom styles */
+        /* Custom colors */
         .text-gold {
-            color: #D4AF37;
+            color: #C9A961;
         }
 
         .bg-gold {
-            background-color: #D4AF37;
+            background-color: #C9A961;
         }
 
         .border-gold {
-            border-color: #D4AF37;
+            border-color: #C9A961;
+        }
+
+        .text-bronze {
+            color: #8B7355;
         }
 
         .bg-card {
-            background-color: rgba(20, 20, 20, 0.6);
-        }
-
-        .border-card {
-            border-color: rgba(212, 175, 55, 0.2);
+            background-color: rgba(15, 15, 15, 0.8);
         }
 
         /* Hero image styles */
@@ -132,6 +187,65 @@
             height: 100%;
             object-fit: cover;
             object-position: center;
+            filter: contrast(1.1) brightness(0.85) saturate(0.9);
+        }
+
+        /* Section divider */
+        .section-divider {
+            height: 1px;
+            background: linear-gradient(to right, transparent, #C9A961, transparent);
+            margin: 0 auto;
+            max-width: 800px;
+        }
+
+        .section-divider-double {
+            position: relative;
+            height: 3px;
+        }
+
+        .section-divider-double::before,
+        .section-divider-double::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(to right, transparent, #C9A961, transparent);
+        }
+
+        .section-divider-double::before {
+            top: 0;
+        }
+
+        .section-divider-double::after {
+            bottom: 0;
+        }
+
+        /* Typography enhancements */
+        .heading-lg {
+            font-family: 'Cinzel', serif;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: #d4c5b0;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+        }
+
+        .heading-accent {
+            color: #C9A961;
+            font-style: italic;
+            text-transform: none;
+            letter-spacing: 0.05em;
+        }
+
+        /* Card styling matching branding */
+        .brand-card {
+            background:
+                linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+                url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='2.5' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.1'/%3E%3C/svg%3E");
+            border: 1px solid #8B7355;
+            box-shadow:
+                inset 0 0 40px rgba(0, 0, 0, 0.5),
+                0 4px 16px rgba(0, 0, 0, 0.6);
         }
     </style>
 </head>
@@ -144,37 +258,42 @@
             alt="Juan Grey - Private Mentorship"
             class="hero-image"
         />
-        <div class="absolute inset-0 bg-gradient-to-b from-black/85 via-black/70 to-black z-0"></div>
-        <div class="absolute inset-0 bg-gradient-to-r from-black/90 via-transparent to-black/90 z-0"></div>
+        <div class="absolute inset-0 bg-gradient-to-b from-black/90 via-black/75 to-black z-0"></div>
+        <div class="absolute inset-0 bg-gradient-to-r from-black/95 via-transparent to-black/95 z-0"></div>
 
-        <div class="relative z-10 text-center px-6 max-w-5xl mx-auto">
-            <p class="text-gold tracking-[0.35em] uppercase text-xs md:text-sm font-semibold mb-8 fade-in-up">
+        <div class="relative z-10 text-center px-6 max-w-6xl mx-auto">
+            <div class="section-divider mb-8 fade-in-up"></div>
+            <p class="font-display text-xs md:text-sm mb-8 fade-in-up text-gold">
                 PRIVATE MENTORSHIP
             </p>
-            <h1 class="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-normal tracking-tight leading-[1.1] mb-8 fade-in-up">
-                90 Days to rebuild structure,<br />sharpen execution,<br />and move with direction.
+            <div class="section-divider mb-12 fade-in-up"></div>
+
+            <h1 class="heading-lg text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-normal leading-[1.2] mb-12 fade-in-up">
+                90 DAYS TO REBUILD STRUCTURE,<br />
+                SHARPEN EXECUTION,<br />
+                AND MOVE WITH DIRECTION.
             </h1>
-            <div class="max-w-2xl mx-auto mb-12 space-y-4 fade-in-up">
-                <p class="text-gray-200 text-lg md:text-xl font-light tracking-wide">
+
+            <div class="max-w-2xl mx-auto mb-12 fade-in-up">
+                <p class="text-bronze text-base md:text-lg mb-3 italic">
                     This is not motivation.
                 </p>
-                <p class="text-gold font-serif text-2xl md:text-3xl italic">
+                <p class="heading-accent text-xl md:text-2xl">
                     This is structured performance.
                 </p>
             </div>
-            <div class="fade-in-up">
+
+            <div class="fade-in-up mb-16">
                 <a
                     href="#apply"
-                    class="inline-block bg-gold hover:bg-gold-light text-black font-bold px-12 py-7 text-base md:text-lg border-2 border-gold rounded-lg shadow-2xl transition-all duration-300 hover:scale-105"
+                    class="inline-block bg-gold hover:bg-gold-light text-black font-display px-10 py-5 text-sm md:text-base border border-gold-dark shadow-2xl transition-all duration-300 hover:scale-105"
                 >
                     APPLY FOR MENTORSHIP
                 </a>
             </div>
 
             <div class="absolute bottom-10 left-1/2 -translate-x-1/2 fade-in-up">
-                <svg class="w-6 h-6 text-gold/60 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                </svg>
+                <div class="section-divider w-12"></div>
             </div>
         </div>
     </section>
@@ -210,35 +329,37 @@
     </section>
 
     <!-- 3️⃣ POSITIONING STRIP -->
-    <section class="py-16 px-6 bg-card border-y border-gold/20 grain-overlay">
-        <div class="max-w-6xl mx-auto">
-            <div class="grid md:grid-cols-3 gap-8 md:gap-12">
-                <div class="text-center fade-in-up">
-                    <p class="text-gray-500 text-lg line-through mb-3">Motivation</p>
-                    <div class="flex items-center justify-center mb-3">
-                        <div class="h-px w-8 bg-gold/40"></div>
-                        <span class="text-gold mx-3 text-2xl">→</span>
-                        <div class="h-px w-8 bg-gold/40"></div>
+    <section class="py-12 px-6 gold-border-top gold-border-bottom grain-overlay">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid md:grid-cols-3 gap-1 md:gap-0">
+                <div class="text-center border-r border-bronze/40 px-6 py-8 fade-in-up">
+                    <div class="w-16 h-16 mx-auto mb-4 rounded-full border-2 border-gold/40 flex items-center justify-center">
+                        <svg class="w-8 h-8 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                        </svg>
                     </div>
-                    <p class="text-gold font-serif text-2xl md:text-3xl tracking-wide">Discipline</p>
+                    <h3 class="font-display text-sm md:text-base mb-2 text-gold">DISCIPLINE</h3>
+                    <p class="text-bronze text-xs md:text-sm">OVER MOTIVATION</p>
                 </div>
-                <div class="text-center fade-in-up">
-                    <p class="text-gray-500 text-lg line-through mb-3">Chaos</p>
-                    <div class="flex items-center justify-center mb-3">
-                        <div class="h-px w-8 bg-gold/40"></div>
-                        <span class="text-gold mx-3 text-2xl">→</span>
-                        <div class="h-px w-8 bg-gold/40"></div>
+
+                <div class="text-center border-r border-bronze/40 px-6 py-8 fade-in-up">
+                    <div class="w-16 h-16 mx-auto mb-4 rounded-full border-2 border-gold/40 flex items-center justify-center">
+                        <svg class="w-8 h-8 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+                        </svg>
                     </div>
-                    <p class="text-gold font-serif text-2xl md:text-3xl tracking-wide">Structure</p>
+                    <h3 class="font-display text-sm md:text-base mb-2 text-gold">STRUCTURE</h3>
+                    <p class="text-bronze text-xs md:text-sm">OVER CHAOS</p>
                 </div>
-                <div class="text-center fade-in-up">
-                    <p class="text-gray-500 text-lg line-through mb-3">Drift</p>
-                    <div class="flex items-center justify-center mb-3">
-                        <div class="h-px w-8 bg-gold/40"></div>
-                        <span class="text-gold mx-3 text-2xl">→</span>
-                        <div class="h-px w-8 bg-gold/40"></div>
+
+                <div class="text-center px-6 py-8 fade-in-up">
+                    <div class="w-16 h-16 mx-auto mb-4 rounded-full border-2 border-gold/40 flex items-center justify-center">
+                        <svg class="w-8 h-8 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"></path>
+                        </svg>
                     </div>
-                    <p class="text-gold font-serif text-2xl md:text-3xl tracking-wide">Direction</p>
+                    <h3 class="font-display text-sm md:text-base mb-2 text-gold">DIRECTION</h3>
+                    <p class="text-bronze text-xs md:text-sm">OVER DRIFT</p>
                 </div>
             </div>
         </div>
@@ -246,150 +367,220 @@
 
     <!-- 4️⃣ WHO THIS IS FOR -->
     <section class="py-24 md:py-32 px-6 grain-overlay">
-        <div class="max-w-4xl mx-auto">
-            <div class="text-center mb-12">
-                <h2 class="font-serif text-3xl md:text-5xl mb-8 fade-in-up leading-tight">
-                    This mentorship is for men who know they're capable of operating at a higher level<br />
-                    <span class="text-gold italic">and want their life to reflect that.</span>
+        <div class="max-w-6xl mx-auto">
+            <div class="framed-section p-12 md:p-16 mb-16 fade-in-up">
+                <div class="section-divider-double mb-8"></div>
+                <h2 class="font-display text-xl md:text-3xl text-center mb-8 text-gold">
+                    THIS IS NOT FOR EVERYONE
                 </h2>
-            </div>
+                <div class="section-divider-double mb-12"></div>
 
-            <div class="mb-12">
-                <p class="text-gray-200 text-xl md:text-2xl font-light mb-8 fade-in-up">
-                    This is for:
-                </p>
-                <div class="space-y-5">
-                    <div class="flex items-start gap-4 fade-in-up border-l-2 border-gold/30 pl-6 py-3 hover:border-gold transition-all">
-                        <div class="w-2 h-2 rounded-full bg-gold mt-2.5 flex-shrink-0"></div>
-                        <span class="text-gray-200 text-lg leading-relaxed">Men who want sharper routines and clearer direction</span>
-                    </div>
-                    <div class="flex items-start gap-4 fade-in-up border-l-2 border-gold/30 pl-6 py-3 hover:border-gold transition-all">
-                        <div class="w-2 h-2 rounded-full bg-gold mt-2.5 flex-shrink-0"></div>
-                        <span class="text-gray-200 text-lg leading-relaxed">Builders who want their body and mind aligned with their goals</span>
-                    </div>
-                    <div class="flex items-start gap-4 fade-in-up border-l-2 border-gold/30 pl-6 py-3 hover:border-gold transition-all">
-                        <div class="w-2 h-2 rounded-full bg-gold mt-2.5 flex-shrink-0"></div>
-                        <span class="text-gray-200 text-lg leading-relaxed">Those in transition who want structure, not noise</span>
-                    </div>
-                    <div class="flex items-start gap-4 fade-in-up border-l-2 border-gold/30 pl-6 py-3 hover:border-gold transition-all">
-                        <div class="w-2 h-2 rounded-full bg-gold mt-2.5 flex-shrink-0"></div>
-                        <span class="text-gray-200 text-lg leading-relaxed">Men who perform best when standards rise</span>
+                <div class="max-w-4xl mx-auto">
+                    <p class="text-center text-base md:text-lg mb-12 leading-relaxed">
+                        This mentorship is for men who know they're capable of operating at a higher level and want their life to reflect that. This is not for those who seek comfort but sharper discipline and more routines as a spearheaded mode rendition. Those who undergo bottom tiers or move beyond those.
+                    </p>
+
+                    <div class="grid md:grid-cols-2 gap-8 text-sm md:text-base">
+                        <div>
+                            <p class="text-bronze mb-4">This is for:</p>
+                            <div class="space-y-3">
+                                <div class="flex items-start gap-3">
+                                    <span class="text-gold mt-1">—</span>
+                                    <span>Men who want sharper routines and clearer direction</span>
+                                </div>
+                                <div class="flex items-start gap-3">
+                                    <span class="text-gold mt-1">—</span>
+                                    <span>Builders who want their body and mind aligned with their goals</span>
+                                </div>
+                                <div class="flex items-start gap-3">
+                                    <span class="text-gold mt-1">—</span>
+                                    <span>Those in transition who want structure, not noise</span>
+                                </div>
+                                <div class="flex items-start gap-3">
+                                    <span class="text-gold mt-1">—</span>
+                                    <span>Men who perform best when standards rise</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <p class="text-bronze mb-4">This is not for:</p>
+                            <div class="space-y-3 opacity-60">
+                                <div class="flex items-start gap-3">
+                                    <span class="text-bronze mt-1">—</span>
+                                    <span>Those seeking quick fixes or shortcuts</span>
+                                </div>
+                                <div class="flex items-start gap-3">
+                                    <span class="text-bronze mt-1">—</span>
+                                    <span>Men who prioritize comfort over growth</span>
+                                </div>
+                                <div class="flex items-start gap-3">
+                                    <span class="text-bronze mt-1">—</span>
+                                    <span>Those unwilling to face hard truths</span>
+                                </div>
+                                <div class="flex items-start gap-3">
+                                    <span class="text-bronze mt-1">—</span>
+                                    <span>Anyone expecting passive transformation</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <div class="border-t border-b border-gold/20 py-8 my-12 fade-in-up">
-                <p class="text-center text-lg md:text-xl">
-                    <span class="text-gray-400">If you want comfort, this isn't it.</span><br />
-                    <span class="text-gold font-serif text-2xl md:text-3xl italic mt-2 block">If you want momentum, keep reading.</span>
+            <div class="text-center framed-section p-8 max-w-3xl mx-auto fade-in-up">
+                <p class="text-bronze text-base md:text-lg italic mb-2">
+                    This is not comfort.
+                </p>
+                <p class="font-display text-xl md:text-2xl text-gold">
+                    THIS IS EXECUTION.
                 </p>
             </div>
         </div>
     </section>
 
     <!-- 5️⃣ WHAT CHANGES IN 90 DAYS -->
-    <section class="py-24 md:py-32 px-6 bg-card/30 grain-overlay">
-        <div class="max-w-5xl mx-auto">
-            <h2 class="font-serif text-3xl md:text-5xl text-center mb-16 fade-in-up">
-                What changes in 90 days
+    <section class="py-20 md:py-32 px-6 grain-overlay">
+        <div class="max-w-7xl mx-auto">
+            <div class="section-divider-double mb-6"></div>
+            <h2 class="font-display text-2xl md:text-3xl text-center mb-6 fade-in-up text-gold">
+                WHAT CHANGES IN 90 DAYS
             </h2>
+            <div class="section-divider-double mb-16"></div>
 
-            <div class="grid md:grid-cols-2 gap-8 mb-12">
-                <div class="border border-gold/20 bg-card/50 p-8 rounded-lg hover:border-gold/50 transition-all fade-in-up hover-elevate">
-                    <h3 class="text-gold font-serif text-2xl mb-3">Physical consistency</h3>
-                    <p class="text-gray-300 text-lg">Your training becomes non-negotiable</p>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-16">
+                <div class="framed-section p-6 fade-in-up hover-elevate">
+                    <div class="aspect-square bg-black/40 mb-4 rounded overflow-hidden">
+                        <div class="w-full h-full flex items-center justify-center text-gold/20">
+                            <svg class="w-16 h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                            </svg>
+                        </div>
+                    </div>
+                    <h3 class="font-display text-xs md:text-sm mb-2 text-gold">Physical consistency</h3>
+                    <p class="text-bronze text-xs">You train and move with rhythm again.</p>
                 </div>
-                <div class="border border-gold/20 bg-card/50 p-8 rounded-lg hover:border-gold/50 transition-all fade-in-up hover-elevate">
-                    <h3 class="text-gold font-serif text-2xl mb-3">Mental clarity</h3>
-                    <p class="text-gray-300 text-lg">Less noise. More focus.</p>
+
+                <div class="framed-section p-6 fade-in-up hover-elevate">
+                    <div class="aspect-square bg-black/40 mb-4 rounded overflow-hidden">
+                        <div class="w-full h-full flex items-center justify-center text-gold/20">
+                            <svg class="w-16 h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                            </svg>
+                        </div>
+                    </div>
+                    <h3 class="font-display text-xs md:text-sm mb-2 text-gold">Mental clarity</h3>
+                    <p class="text-bronze text-xs">You stop second-guessing your direction.</p>
                 </div>
-                <div class="border border-gold/20 bg-card/50 p-8 rounded-lg hover:border-gold/50 transition-all fade-in-up hover-elevate">
-                    <h3 class="text-gold font-serif text-2xl mb-3">Structured discipline</h3>
-                    <p class="text-gray-300 text-lg">Systems that create reliability</p>
+
+                <div class="framed-section p-6 fade-in-up hover-elevate">
+                    <div class="aspect-square bg-black/40 mb-4 rounded overflow-hidden">
+                        <div class="w-full h-full flex items-center justify-center text-gold/20">
+                            <svg class="w-16 h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path>
+                            </svg>
+                        </div>
+                    </div>
+                    <h3 class="font-display text-xs md:text-sm mb-2 text-gold">Structured discipline</h3>
+                    <p class="text-bronze text-xs">Your days begin to reinforce your goals.</p>
                 </div>
-                <div class="border border-gold/20 bg-card/50 p-8 rounded-lg hover:border-gold/50 transition-all fade-in-up hover-elevate">
-                    <h3 class="text-gold font-serif text-2xl mb-3">Identity shift</h3>
-                    <p class="text-gray-300 text-lg">You become someone different</p>
+
+                <div class="framed-section p-6 fade-in-up hover-elevate">
+                    <div class="aspect-square bg-black/40 mb-4 rounded overflow-hidden">
+                        <div class="w-full h-full flex items-center justify-center text-gold/20">
+                            <svg class="w-16 h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                            </svg>
+                        </div>
+                    </div>
+                    <h3 class="font-display text-xs md:text-sm mb-2 text-gold">Identity shift</h3>
+                    <p class="text-bronze text-xs">You don't just improve habits. You move like someone sharper.</p>
                 </div>
             </div>
 
-            <div class="text-center mt-16 fade-in-up">
-                <p class="text-gray-200 text-xl md:text-2xl mb-3">
-                    Your days stop drifting.
+            <div class="text-center framed-section p-8 max-w-3xl mx-auto fade-in-up">
+                <p class="text-bronze text-base md:text-lg italic mb-2">
+                    This is not comfort.
                 </p>
-                <p class="text-gold font-serif text-3xl md:text-4xl italic">
-                    Your actions start compounding.
+                <p class="font-display text-xl md:text-2xl text-gold">
+                    THIS IS EXECUTION.
                 </p>
             </div>
         </div>
     </section>
 
     <!-- 6️⃣ HOW THE SYSTEM WORKS -->
-    <section class="py-24 md:py-32 px-6 grain-overlay">
-        <div class="max-w-5xl mx-auto">
-            <h2 class="font-serif text-3xl md:text-5xl text-center mb-20 fade-in-up">
-                How the system works
+    <section class="py-24 md:py-32 px-6 grain-overlay gold-border-top gold-border-bottom">
+        <div class="max-w-6xl mx-auto">
+            <div class="section-divider-double mb-6 fade-in-up"></div>
+            <h2 class="font-display text-2xl md:text-3xl text-center mb-6 fade-in-up text-gold">
+                HOW THE MENTORSHIP WORKS
             </h2>
+            <div class="section-divider-double mb-12 fade-in-up"></div>
 
-            <div class="space-y-12">
-                <div class="flex flex-col md:flex-row gap-6 md:gap-8 items-start fade-in-up">
-                    <div class="flex-shrink-0">
-                        <span class="font-serif text-5xl md:text-6xl text-gold/30 font-light">01</span>
+            <p class="text-center max-w-3xl mx-auto mb-16 text-base md:text-lg leading-relaxed fade-in-up">
+                This mentorship runs on a structured performance system designed for execution in real life.
+            </p>
+
+            <div class="grid md:grid-cols-2 gap-8 mb-12">
+                <div class="brand-card p-8 fade-in-up hover-elevate">
+                    <div class="flex items-start gap-4 mb-4">
+                        <span class="font-display text-2xl text-gold">1</span>
+                        <h3 class="font-display text-base md:text-lg text-gold">WEEKLY PRIVATE SESSIONS</h3>
                     </div>
-                    <div class="flex-1 pt-2">
-                        <h3 class="font-serif text-2xl md:text-3xl mb-3">Weekly Private Sessions</h3>
-                        <p class="text-gray-400 text-lg leading-relaxed">45-minute sessions focused on direction, structure, and decisive action.</p>
-                    </div>
+                    <p class="text-sm md:text-base leading-relaxed pl-8">
+                        45-minute one-on-one sessions focused on direction, structure, and decisive action.
+                    </p>
                 </div>
 
-                <div class="flex flex-col md:flex-row gap-6 md:gap-8 items-start fade-in-up">
-                    <div class="flex-shrink-0">
-                        <span class="font-serif text-5xl md:text-6xl text-gold/30 font-light">02</span>
+                <div class="brand-card p-8 fade-in-up hover-elevate">
+                    <div class="flex items-start gap-4 mb-4">
+                        <span class="font-display text-2xl text-gold">2</span>
+                        <h3 class="font-display text-base md:text-lg text-gold">PERSONAL PERFORMANCE PROTOCOL</h3>
                     </div>
-                    <div class="flex-1 pt-2">
-                        <h3 class="font-serif text-2xl md:text-3xl mb-3">Personal Performance Protocol</h3>
-                        <p class="text-gray-400 text-lg leading-relaxed">A tailored system built around your life. Training rhythm. Discipline anchors. Priority structure.</p>
-                    </div>
+                    <p class="text-sm md:text-base leading-relaxed pl-8">
+                        A tailored high-performance system built around your life.
+                    </p>
                 </div>
 
-                <div class="flex flex-col md:flex-row gap-6 md:gap-8 items-start fade-in-up">
-                    <div class="flex-shrink-0">
-                        <span class="font-serif text-5xl md:text-6xl text-gold/30 font-light">03</span>
+                <div class="brand-card p-8 fade-in-up hover-elevate">
+                    <div class="flex items-start gap-4 mb-4">
+                        <span class="font-display text-2xl text-gold">3</span>
+                        <h3 class="font-display text-base md:text-lg text-gold">DAILY DEPOSITS SYSTEM</h3>
                     </div>
-                    <div class="flex-1 pt-2">
-                        <h3 class="font-serif text-2xl md:text-3xl mb-3">Daily Deposits System</h3>
-                        <p class="text-gray-400 text-lg leading-relaxed">Simple daily actions that compound progress.</p>
-                    </div>
+                    <p class="text-sm md:text-base leading-relaxed pl-8">
+                        Simple, actionable steps that compound progress.
+                    </p>
                 </div>
 
-                <div class="flex flex-col md:flex-row gap-6 md:gap-8 items-start fade-in-up">
-                    <div class="flex-shrink-0">
-                        <span class="font-serif text-5xl md:text-6xl text-gold/30 font-light">04</span>
+                <div class="brand-card p-8 fade-in-up hover-elevate">
+                    <div class="flex items-start gap-4 mb-4">
+                        <span class="font-display text-2xl text-gold">4</span>
+                        <h3 class="font-display text-base md:text-lg text-gold">MONTHLY PERFORMANCE AUDIT</h3>
                     </div>
-                    <div class="flex-1 pt-2">
-                        <h3 class="font-serif text-2xl md:text-3xl mb-3">Monthly Performance Audit</h3>
-                        <p class="text-gray-400 text-lg leading-relaxed">A structured review of your progress across body, focus, energy, and execution.</p>
-                    </div>
+                    <p class="text-sm md:text-base leading-relaxed pl-8">
+                        A structured monthly review of your progress.
+                    </p>
                 </div>
 
-                <div class="flex flex-col md:flex-row gap-6 md:gap-8 items-start fade-in-up">
-                    <div class="flex-shrink-0">
-                        <span class="font-serif text-5xl md:text-6xl text-gold/30 font-light">05</span>
+                <div class="brand-card p-8 fade-in-up hover-elevate">
+                    <div class="flex items-start gap-4 mb-4">
+                        <span class="font-display text-2xl text-gold">5</span>
+                        <h3 class="font-display text-base md:text-lg text-gold">PERFORMANCE EVOLUTION</h3>
                     </div>
-                    <div class="flex-1 pt-2">
-                        <h3 class="font-serif text-2xl md:text-3xl mb-3">Performance Evolution</h3>
-                        <p class="text-gray-400 text-lg leading-relaxed">As your life sharpens, your protocol evolves.</p>
-                    </div>
+                    <p class="text-sm md:text-base leading-relaxed pl-8">
+                        As your life sharpens, your protocol evolves.
+                    </p>
                 </div>
 
-                <div class="flex flex-col md:flex-row gap-6 md:gap-8 items-start fade-in-up">
-                    <div class="flex-shrink-0">
-                        <span class="font-serif text-5xl md:text-6xl text-gold/30 font-light">06</span>
+                <div class="brand-card p-8 fade-in-up hover-elevate">
+                    <div class="flex items-start gap-4 mb-4">
+                        <span class="font-display text-2xl text-gold">+</span>
+                        <h3 class="font-display text-base md:text-lg text-gold">FIGHTER FOUNDATIONS BONUS</h3>
                     </div>
-                    <div class="flex-1 pt-2">
-                        <h3 class="font-serif text-2xl md:text-3xl mb-3">Fighter Foundations Bonus</h3>
-                        <p class="text-gray-400 text-lg leading-relaxed">Structured introduction to movement, striking mechanics, and combat conditioning.</p>
-                    </div>
+                    <p class="text-sm md:text-base leading-relaxed pl-8">
+                        Structured introduction to movement, striking mechanics, and combat conditioning.
+                    </p>
                 </div>
             </div>
         </div>
@@ -489,57 +680,75 @@
 
     <!-- 9️⃣ ABOUT JUAN -->
     <section class="py-24 md:py-32 px-6 grain-overlay">
-        <div class="max-w-4xl mx-auto">
-            <h2 class="font-serif text-3xl md:text-5xl text-center mb-12 fade-in-up">
-                About Juan Grey
+        <div class="max-w-6xl mx-auto">
+            <div class="section-divider-double mb-6 fade-in-up"></div>
+            <h2 class="font-display text-2xl md:text-3xl text-center mb-6 fade-in-up text-gold">
+                ABOUT JUAN
             </h2>
+            <div class="section-divider-double mb-16 fade-in-up"></div>
 
-            <div class="space-y-6 text-gray-300 text-lg leading-relaxed">
-                <p class="fade-in-up">
-                    Juan Grey is an athlete, entrepreneur, and builder focused on discipline, performance, and purpose.
-                </p>
-                <p class="fade-in-up">
-                    He competed at the national level in his early years and later transitioned into combat training,
-                    building a life structured around execution and growth.
-                </p>
-                <p class="fade-in-up">
-                    For over a decade he has created tools and projects that have helped thousands reconnect with direction and purpose.
-                </p>
-                <p class="fade-in-up">
-                    Today he trains globally while mentoring a small number of individuals privately.
-                </p>
-                <div class="pt-6 fade-in-up">
-                    <p class="text-gold font-serif text-2xl md:text-3xl italic text-center">
-                        Structure creates clarity, and clarity creates momentum.
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div class="framed-section p-8 fade-in-up">
+                    <div class="aspect-[3/4] bg-black/40 rounded overflow-hidden">
+                        <img
+                            src="/attached_assets/JuanGreyMaster_1_1769102177296.jpeg"
+                            alt="Juan Grey"
+                            class="w-full h-full object-cover object-center"
+                            style="filter: contrast(1.1) brightness(0.85) saturate(0.9);"
+                        />
+                    </div>
+                </div>
+
+                <div class="space-y-6 text-base md:text-lg leading-relaxed fade-in-up">
+                    <p>
+                        Juan Grey is a combat athlete and entrepreneur known for his focus on discipline, performance, and purpose.
                     </p>
+                    <p>
+                        He competed at elite levels in his early years and later transitioned into combat training, building a life structured around execution and growth.
+                    </p>
+                    <p>
+                        For over a decade he has created systems and projects that have helped thousands reconnect with direction and clarity.
+                    </p>
+                    <p>
+                        Today he trains globally while mentoring a small number of individuals privately through structured performance systems.
+                    </p>
+
+                    <div class="pt-6 border-t border-gold/20">
+                        <p class="heading-accent text-xl md:text-2xl text-center">
+                            "Structure creates clarity, and clarity creates momentum."
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- 🔟 PRICING -->
-    <section class="py-24 md:py-32 px-6 bg-card/30 grain-overlay">
-        <div class="max-w-3xl mx-auto">
-            <div class="border-2 border-gold/30 bg-card/60 p-12 rounded-lg text-center fade-in-up">
-                <p class="text-gold tracking-[0.3em] uppercase text-sm font-semibold mb-6">PRIVATE MENTORSHIP</p>
-                <h2 class="font-serif text-4xl md:text-5xl mb-6">90-Day Commitment</h2>
-                <p class="text-gray-400 text-lg mb-8">Paid monthly</p>
+    <section class="py-24 md:py-32 px-6 grain-overlay gold-border-top gold-border-bottom">
+        <div class="max-w-4xl mx-auto">
+            <div class="framed-section p-12 md:p-16 text-center fade-in-up">
+                <p class="font-display text-xs md:text-sm mb-6 text-gold">PRIVATE MENTORSHIP</p>
 
-                <div class="mb-10">
-                    <span class="text-gold font-serif text-6xl md:text-7xl">$1,500</span>
-                    <span class="text-gray-500 text-2xl ml-2">/ month</span>
+                <div class="section-divider mb-8"></div>
+
+                <h2 class="font-display text-3xl md:text-4xl mb-4">90-DAY COMMITMENT</h2>
+                <p class="text-bronze text-sm md:text-base mb-12">Paid monthly</p>
+
+                <div class="mb-12">
+                    <span class="text-gold font-display text-5xl md:text-6xl">$1,500</span>
+                    <span class="text-bronze text-xl ml-2">/ MONTH</span>
                 </div>
 
-                <div class="h-px bg-gold/20 my-8"></div>
+                <div class="section-divider mb-8"></div>
 
-                <div class="space-y-3 mb-10 text-gray-300">
+                <div class="space-y-3 mb-12 text-sm md:text-base">
                     <p>Limited spaces each cycle.</p>
                     <p>Applications reviewed personally.</p>
                 </div>
 
                 <a
                     href="#apply"
-                    class="inline-block bg-gold hover:bg-gold-light text-black font-bold px-12 py-7 text-lg border-2 border-gold rounded-lg shadow-2xl transition-all duration-300 hover:scale-105"
+                    class="inline-block bg-gold hover:bg-gold-light text-black font-display px-10 py-5 text-sm md:text-base border border-gold-dark shadow-2xl transition-all duration-300 hover:scale-105"
                 >
                     APPLY FOR MENTORSHIP
                 </a>
